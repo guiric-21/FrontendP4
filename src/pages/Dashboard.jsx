@@ -101,43 +101,47 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-100 to-green-300 p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-green-800">Minhas Tarefas</h1>
-        <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-semibold">Sair</button>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-green-100 to-green-300 flex">
+      <aside className="w-64 bg-white p-4 shadow-lg sticky top-0 h-screen overflow-y-auto flex flex-col justify-between">
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold text-green-800">Minhas Tarefas</h1>
+        </div>
 
-      <div className="bg-white rounded-xl shadow p-4 mb-6 flex flex-wrap gap-4 items-end">
-        <div>
-          <label className="block text-gray-700 mb-1">Prioridade</label>
-          <select name="priority" value={filters.priority} onChange={handleFilterChange} className="border rounded px-2 py-1">
-            <option value="">Todas</option>
-            <option value="alta">Alta</option>
-            <option value="média">Média</option>
-            <option value="baixa">Baixa</option>
-          </select>
+        <div className= "flex flex-col gap-4">
+          <div>
+            <label className="block text-gray-700 mb-1">Prioridade</label>
+            <select name="priority" value={filters.priority} onChange={handleFilterChange} className="border rounded px-2 py-1 w-full">
+              <option value="">Todas</option>
+              <option value="alta">Alta</option>
+              <option value="média">Média</option>
+              <option value="baixa">Baixa</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-gray-700 mb-1">Status</label>
+            <select name="status" value={filters.status} onChange={handleFilterChange} className="border rounded px-2 py-1 w-full">
+              <option value="">Todos</option>
+              <option value="não iniciada">Não iniciada</option>
+              <option value="em andamento">Em andamento</option>
+              <option value="finalizada">Finalizada</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-gray-700 mb-1">Data da entrega antes de</label>
+            <input type="date" name="dueBefore" value={filters.dueBefore} onChange={handleFilterChange} className="border rounded px-2 py-1 w-full" />
+          </div>
+          <div>
+            <label className="block text-gray-700 mb-1">Data da entrega depois de</label>
+            <input type="date" name="dueAfter" value={filters.dueAfter} onChange={handleFilterChange} className="border rounded px-2 py-1 w-full" />
+          </div>
+          <button onClick={fetchTasks} className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold">Filtrar</button>
+          <button onClick={() => setFilters({ priority: "", status: "", dueBefore: "", dueAfter: "" })} className="text-gray-600 underline w-full">Limpar</button>
         </div>
-        <div>
-          <label className="block text-gray-700 mb-1">Status</label>
-          <select name="status" value={filters.status} onChange={handleFilterChange} className="border rounded px-2 py-1">
-            <option value="">Todos</option>
-            <option value="não iniciada">Não iniciada</option>
-            <option value="em andamento">Em andamento</option>
-            <option value="finalizada">Finalizada</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-gray-700 mb-1">Data da entrega antes de</label>
-          <input type="date" name="dueBefore" value={filters.dueBefore} onChange={handleFilterChange} className="border rounded px-2 py-1" />
-        </div>
-        <div>
-          <label className="block text-gray-700 mb-1">Data da entrega depois de</label>
-          <input type="date" name="dueAfter" value={filters.dueAfter} onChange={handleFilterChange} className="border rounded px-2 py-1" />
-        </div>
-        <button onClick={fetchTasks} className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-semibold">Filtrar</button>
-        <button onClick={() => setFilters({ priority: "", status: "", dueBefore: "", dueAfter: "" })} className="ml-2 text-gray-600 underline">Limpar</button>
-      </div>
-
+      </aside>
+      <div className="flex-1 p-4">
+        <div className="flex justify-end items -center mb-6">
+          <button onClick={handleLogout} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-semibold">Sair</button>
+        </div>  
       <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow p-6 mb-8 max-w-xl mx-auto">
         <h2 className="text-lg font-semibold mb-4">{editId ? "Editar Tarefa" : "Nova Tarefa"}</h2>
         <input
@@ -229,6 +233,7 @@ export default function Dashboard() {
           </ul>
         )}
       </div>
+    </div>  
     </div>
   );
 }
